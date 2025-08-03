@@ -47,9 +47,6 @@ GROUP BY pt.category
 
 
 -- 7):- Determine the distribution of orders by hour of the day.
-SELECT * from orders
-SELECT * from order_details
-
 SELECT distinct DATEPART(HOUR, time), count(order_id) as Orders
 FROM orders 
 GROUP BY time
@@ -62,18 +59,11 @@ GROUP BY category
 
 
 -- 9):- Group the orders by date and calculate the average number of pizzas ordered per day.
-Select * from pizza_types
-select * from order_details
-select * from pizzas
-Select * from orders
-
 SELECT avg(Quantity)as Perday_Avg_Qty FROM
 (SELECT  o.date, sum(od.quantity) as Quantity
 FROM orders o
 join order_details od on o.order_id = od.order_id
 GROUP BY o.date) as Order_Quantity;
-
-
 
 
 -- 10):- Determine the top 3 most ordered pizza types based on revenue.
@@ -83,6 +73,8 @@ join pizzas p on pt.pizza_type_id = p.pizza_type_id
 join order_details od on p.pizza_id = od.pizza_id 
 GROUP BY pt.name, pt.pizza_type_id
 ORDER BY Total_Revenue desc;
+
+
 
 --: Advanced :--
 
@@ -121,5 +113,6 @@ join pizzas p on pt.pizza_type_id = p.pizza_type_id
 join order_details od on od.pizza_id = p.pizza_id
 GROUP BY pt.category, pt.name ) as a) b
 where rn <= 3 ;
+
 
 
